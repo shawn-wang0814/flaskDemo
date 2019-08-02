@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改用户信息</title>
+</head>
+<body>
+    <form action="alter_user" method="post">
+        姓名：<input type="text" value="{{params.user.name}}" name="uname">
+        性别：<input type="text" value="{{params.user.gender}}" name="ugender">
+        年龄：<input type="number" value="{{params.user.age}}" name="uage">
+        邮箱：<input type="email" value="{{params.user.age}}" name="uemail">
+        <input type="submit">
+    </form>
+</body>
+</html>

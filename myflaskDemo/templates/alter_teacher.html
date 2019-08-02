@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改教师信息</title>
+</head>
+<body>
+    <form action="alter_teacher" method="post">
+        姓名：<input type="text" value="{{params.teacher.name}}" name="tname">
+        <input type="hidden" value="{{params.id}}" name="tid">
+        性别：<input type="text" value="{{params.teacher.gender}}" name="tgender">
+        年龄：<input type="number" value="{{params.teacher.age}}" name="tage">
+        邮箱：<input type="email" value="{{params.teacher.email}}" name="temail">
+        课程: <select name="course_name">
+        {% for course in params.course %}
+            <option value="{{course.name}}">{{course.name}}</option>
+        {% endfor %}
+    </select>
+        <input type="submit">
+
+    </form>
+</body>
+</html>

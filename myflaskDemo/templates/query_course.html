@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查询课程</title>
+</head>
+<body>
+    <a href="do_home">首页</a>
+    <table border="1px">
+        <tr>
+            <td>课程名称</td>
+            <td>课时</td>
+            <td>操作</td>
+        </tr>
+
+        {% for c in params.courses %}
+            <tr>
+                <td>{{c.name}}</td>
+                <td>{{c.times}}</td>
+                <td>
+                    <a href="/delete_course?cid={{c.id}}" >删除</a>
+                    <a href="/alter_course?cid={{c.id}}">修改</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+</body>
+</html>

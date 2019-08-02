@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改课程</title>
+</head>
+<body>
+    <form action="alter_course" method="post">
+        课程名称：<input type="text" value="{{params.course.name}}" name="cname">
+        <input type="hidden" value="{{params.id}}" name="cid">
+        课时：<input type="number" value="{{params.course.times}}" name="ctime">
+        <input type="submit">
+    </form>
+</body>
+</html>
