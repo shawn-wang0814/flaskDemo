@@ -48,10 +48,23 @@ class Student(db.Model):
     __tablename__ = "student"
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(50))
+    gender = db.Column(db.String(20))
     age = db.Column(db.Integer)
-    def __init__(self,name,age):
+    courses = db.relationship(
+        'Course',
+        secondary='student_course',
+        lazy='dynamic',
+        backref=db.backref('students',lazy='dynamic')
+    )
+    def __init__(self,name,gender,age):
         self.name = name
+        self.gender = gender
         self.age = age
+
+student_course = db.Table('student_course',
+                          db.Column('id',db.Integer,primary_key=True),
+                          db.Column('student_id',db.Integer,db.ForeignKey('student.id')),
+                          db.Column('course_id',db.Integer,db.ForeignKey('course.id')))
 
 db.create_all()
 
@@ -189,7 +202,44 @@ def alter_course():
         course.times = request.form.get('ctime')
         db.session.add(course)
         return redirect('/query_course')
+@app.route('/add_student',methods=['GET','POST'])
+def add_student():
+    if request.method == 'GET':
+        return render_template('add_student.html')
+    else:
+        name = request.form.get('sname')
+        gender = request.form.get('sgender')
+        age = request.form.get('sage')
+        student = Student(name,gender,age)
+        db.session.add(student)
+        return redirect('/')
+@app.route('/query_student')
+def query_student():
+    students = Student.query.all()
+    return render_template('query_student.html',params=locals())
 
+@app.route('/delete_student')
+def delete_student():
+    sname = request.args.get('sname')
+    student = Student.query.filter_by(name=sname).first()
+    db.session.delete(student)
+    return redirect('/query_teacher')
+
+@app.route('/alter_student',methods=['POST','GET'])
+def alter_student():
+    if request.method == 'GET':
+        id = request.args.get('sid')
+        student = Student.query.filter_by(id=id).first()
+        return render_template('alter_student.html',params=locals())
+    else:
+        id = request.form.get('sid')
+        student = Student.query.filter_by(id=id).first()
+        student.name = request.form.get('sname')
+        student.gender = request.form.get('sgender')
+        student.age = request.form.get('sage')
+
+        db.session.add(student)
+        return redirect('/query_student')
 
 @app.route('/do_home')
 def do_home():
