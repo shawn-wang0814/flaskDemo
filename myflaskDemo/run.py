@@ -69,7 +69,7 @@ student_course = db.Table('student_course',
                           db.Column('id',db.Integer,primary_key=True),
                           db.Column('student_id',db.Integer,db.ForeignKey('student.id')),
                           db.Column('course_id',db.Integer,db.ForeignKey('course.id')))
-
+db.drop_all()
 db.create_all()
 
 @app.route('/')
