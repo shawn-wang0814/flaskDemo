@@ -2,9 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>查询学生信息</title>
 </head>
 <body>
-$END$
+    <a href="do_home">首页</a>
+    <table border="1px">
+        <tr>
+            <td>姓名</td>
+            <td>性别</td>
+            <td>年龄</td>
+            <td>操作</td>
+        </tr>
+        {% for s in params.students %}
+            <tr>
+                <td>{{s.name}}</td>
+                <td>{{s.gender}}</td>
+                <td>{{s.age}}</td>
+                <td>
+                    <a href="/alter_student?sid={{s.id}}" >修改</a>
+                    <a href="/delete_student?sname={{s.name}}" >删除</a>
+                </td>
+            </tr>
+        {% endfor%}
+    </table>
 </body>
 </html>

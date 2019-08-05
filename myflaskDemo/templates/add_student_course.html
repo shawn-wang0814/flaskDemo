@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>增加关联</title>
+</head>
+<body>
+    <form action="add_student_course" method="post">
+        学生：<select name="sid">
+        {% for s in params.student%}
+            <option value="{{s.id}}">{{s.name}}</option>
+        {% endfor %}
+    </select>
+        课程：<select name="cid">
+        {% for c in params.course %}
+            <option value="{{c.id}}">{{c.name}}</option>
+        {% endfor %}
+    </select>
+        <input type="submit">
+    </form>
+</body>
+</html>

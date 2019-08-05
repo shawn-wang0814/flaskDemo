@@ -2,9 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>增加学生</title>
 </head>
 <body>
-$END$
+    <form action="add_student" method="post">
+        姓名：<input type="text" name="sname">
+        性别：<select name="sgender">
+        <option value="男" >男</option>
+        <option value="女">女</option>
+    </select>
+        年龄：<input type="number" name="sage">
+        <input type="submit">
+    </form>
 </body>
 </html>

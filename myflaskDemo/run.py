@@ -15,11 +15,14 @@ class User(db.Model):
     gender = db.Column(db.String(10))
     age = db.Column(db.Integer)
     email = db.Column(db.String(120))
-    def __init__(self,name,gender,age,email):
+    pwd = db.Column(db.String(120))
+    def __init__(self,name,gender,age,email,pwd):
         self.name = name
         self.gender = gender
         self.age = age
         self.email = email
+        self.pwd = pwd
+
 
 class Teacher(db.Model):
     __tablename__ = 'teacher'
@@ -50,6 +53,7 @@ class Student(db.Model):
     name = db.Column(db.String(50))
     gender = db.Column(db.String(20))
     age = db.Column(db.Integer)
+    course = db.relationship('Course',secondary='student_course',backref=db.backref('student',lazy='dynamic'),lazy='dynamic')
     courses = db.relationship(
         'Course',
         secondary='student_course',
@@ -81,9 +85,10 @@ def register():
         gender = request.form.get('ugender')
         age = request.form.get('uage')
         email = request.form.get('uemail')
-        user = User(name,gender,age,email)
+        pwd = request.form.get('upwd')
+        user = User(name,gender,age,email,pwd)
         db.session.add(user)
-        return render_template('/')
+        return redirect('/')
 
 @app.route('/query_user')
 def query_user():
@@ -240,6 +245,22 @@ def alter_student():
 
         db.session.add(student)
         return redirect('/query_student')
+
+@app.route('/add_student_course',methods=['GET','POST'])
+def add_student_course():
+    if request.method =='GET':
+        student=Student.query.all()
+        course = Course.query.all()
+        return render_template('add_student_course.html',params=locals())
+    else:
+        sid = request.form.get('sid')
+        cid = request.form.get('cid')
+        stu = Student.query.filter_by(id=sid).first()
+        cour = Course.query.filter_by(id=cid).first()
+        stu.course.append(cour)
+        db.session.add(stu)
+        return redirect('/add_student_course')
+@app.route('/query_student_course')
 
 @app.route('/do_home')
 def do_home():
