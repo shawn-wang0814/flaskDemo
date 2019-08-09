@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, json
 from flask_sqlalchemy import SQLAlchemy
 import pymysql
 pymysql.install_as_MySQLdb()
@@ -20,6 +20,16 @@ class User(db.Model):
         self.gender = gender
         self.age = age
         self.email = email
+
+    def to_dict(self):
+        dic = {
+            'id': self.id,
+            'uname': self.name,
+            'ugender':self.gender,
+            'uage': self.age,
+            'uemail': self.email
+        }
+        return dic
 
 class Teacher(db.Model):
     __tablename__ = 'teacher'
@@ -53,11 +63,13 @@ class Student(db.Model):
         self.name = name
         self.age = age
 
-db.create_all()
+# db.create_all()
+
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/register',methods=['POST','GET'])
 def register():
@@ -70,12 +82,14 @@ def register():
         email = request.form.get('uemail')
         user = User(name,gender,age,email)
         db.session.add(user)
-        return render_template('/')
+        return redirect('/')
+
 
 @app.route('/query_user')
 def query_user():
     users = User.query.all()
     return render_template('query_user.html',params=locals())
+
 
 @app.route('/delete_user')
 def delete_user():
@@ -83,6 +97,7 @@ def delete_user():
     user = User.query.filter_by(name=name).first()
     db.session.delete(user)
     return redirect('/query_user')
+
 
 @app.route('/alter_user',methods=['POST','GET'])
 def alter_user():
@@ -98,6 +113,7 @@ def alter_user():
         user = User(name,gender,age,email)
         db.session.add(user)
         return redirect('/query_user')
+
 
 @app.route('/add_teacher',methods=['POST','GET'])
 def add_teacher():
@@ -116,10 +132,12 @@ def add_teacher():
         db.session.add(teacher)
         return redirect('/query_teacher')
 
+
 @app.route('/query_teacher')
 def query_teacher():
     teachers = Teacher.query.all()
     return render_template('query_teacher.html',params=locals())
+
 
 @app.route('/alter_teacher',methods=['POST','GET'])
 def alter_teacher():
@@ -141,12 +159,14 @@ def alter_teacher():
         db.session.add(teacher)
         return redirect('/query_teacher')
 
+
 @app.route('/delete_teacher')
 def delete_teacher():
     tname = request.args.get('tname')
     teacher = Teacher.query.filter_by(name=tname).first()
     db.session.delete(teacher)
     return redirect('/query_teacher')
+
 
 @app.route('/add_course',methods=['POST','GET'])
 def add_course():
@@ -159,11 +179,13 @@ def add_course():
         db.session.add(course)
         return redirect('/')
 
+
 @app.route('/query_course')
 def query_course():
     courses = Course.query.all()
     print(courses)
     return render_template('query_course.html',params=locals())
+
 
 @app.route('/delete_course')
 def delete_course():
@@ -171,6 +193,7 @@ def delete_course():
     course = Course.query.filter_by(id=id).first()
     db.session.delete(course)
     return redirect('query_course')
+
 
 @app.route('/alter_course',methods=['GET','POST'])
 def alter_course():
@@ -194,6 +217,37 @@ def alter_course():
 @app.route('/do_home')
 def do_home():
     return redirect('/')
+
+
+@app.route('/show_user')
+def show_user():
+    return render_template('show_user.html')
+
+
+@app.route('/show_data')
+def show_data():
+    users = User.query.all()
+    print(users)
+    list_user = []
+    for u in users:
+        list_user.append(u.to_dict())
+    print(list_user)
+    return json.dumps(list_user)
+
+
+@app.route('/01-user')
+def user_view():
+    return render_template('/01-user.html')
+
+
+@app.route('/01-server')
+def user_server():
+    users = User.query.all()
+    list_user = []
+    for u in users:
+        list_user.append(u.to_dict())
+    return json.dumps(list_user)
+
 
 if __name__=='__main__':
     app.run(debug=True)

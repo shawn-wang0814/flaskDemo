@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息</title>
+    <script type="text/javascript">
+      Window.onload = function ifconfirm() {
+            var r = confrim('是否删除数据?')
+            if(r){
+                return True
+            }
+            else{
+                return False
+            }
+        }
+    </script>
+</head>
+<body>
+<table border="1px">
+    <tr>
+        <th>姓名</th>
+        <th>年龄</th>
+        <th>邮件</th>
+        <th>操作</th>
+    </tr>
+    {% for u in params.users %}
+    <tr>
+<!--        <th><a href="/query_by_id/{{u.id}}" name="uname">{{u.username}}</a></th>-->
+        <th><a href="/query_by_id?id={{u.id}}">{{u.username}}</a> </th>
+        <th>{{u.age}}</th>
+        <th>{{u.email}}</th>
+        <th>
+            <a href="/delete?uname={{u.username}}" onclick="return confirm('是否删除数据?')">删除</a>
+            <a href="/alter?uname={{u.username}}">修改</a>
+        </th>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

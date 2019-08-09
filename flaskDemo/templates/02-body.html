@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% include '02-head.html' %}
+    <div>
+        <p>网页主体</p>
+    </div>
+    <div>
+        <img src="static/images/wxy.jpeg">
+        <img src="{{ url_for('static',filename ="images/wxy.jpeg")}}">
+    </div>
+</body>
+</html>

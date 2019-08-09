@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>信息查询</title>
+</head>
+<body>
+    <table border="1px">
+        <tr>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>性别</th>
+            <th>邮箱</th>
+            <th>操作</th>
+        </tr>
+        {% for u in params.users %}
+            <tr>
+
+                <th>{{u.name}}</th>
+                <th>{{u.age}}</th>
+
+                {% if u.gender == true %}
+                    <th>男</th>
+                {% else %}
+                    <th>女</th>
+                {% endif %}
+
+                <th>
+                    {{u.email}}
+                </th>
+
+                <th>
+                    <a href="/delete?uid={{u.id}}">删除</a>
+                    <a href="/alter?uid={{u.id}}">修改</a>
+                </th>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

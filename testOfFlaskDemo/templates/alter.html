@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改信息</title>
+<!--    <script type="text/javascript">-->
+<!--        function handler(gender) {-->
+<!--            if (gender===1){-->
+<!--                document.getElementsByName('ugender').value = '男'-->
+<!--            }else{-->
+<!--                 document.getElementsByName('ugender').value = '女'-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
+
+</head>
+<body>
+    <form action="/alter/" method="post">
+
+        姓名：<input type="text" name="uname" value="{{params.user.name}}">
+        <input type="hidden" name="uid" value="{{params.user.id}}">
+
+
+        年龄：<input type="number" name="uage" value="{{params.user.age}}">
+
+        性别：<input type="text" name="ugender" value=''>
+            <input type="hidden" id="ugen" value="{{params.user.gender}}">
+
+        邮箱：<input type="email" name="uemail" value={{params.user.email}}>
+
+        <input type="submit">
+
+    </form>
+
+</body>
+<!--<script type="text/javascript">-->
+<!--        function handler(gender) {-->
+<!--            if (gender===1){-->
+<!--                document.getElementsByName('ugender').value = '男'-->
+<!--            }else{-->
+<!--                 document.getElementsByName('ugender').value = '女'-->
+<!--            }-->
+<!--        }-->
+<!--        handler(params.user.gender);-->
+<!--    </script>-->
+<script>
+        var para = document.getElementById('ugen').value
+        if(para === "True"){
+            document.getElementsByTagName('input')[3].value = '男'
+        }else{
+            document.getElementsByTagName('input')[3].value = '女'
+        }
+    </script>
+</html>

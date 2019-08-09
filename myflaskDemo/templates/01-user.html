@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户查询</title>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/jquery-3.4.1.js"></script>
+</head>
+<body>
+<button id="show_user">显示</button>
+    <table border="1px">
+        <thead>
+        <tr>
+            <td>id</td>
+            <td>姓名</td>
+            <td>性别</td>
+            <td>年龄</td>
+            <td>邮箱</td>
+        </tr>
+        </thead>
+        <tbody id="show_body">
+
+        </tbody>
+        <script>
+            $(function () {
+                $('#show_user').click(function () {
+                    var xhr = createXhr();
+                    xhr.open('get','/01-server',true);
+                    xhr.onreadystatechange=function () {
+                        if(xhr.readyState==4&&xhr.status==200){
+                            var arr = JSON.parse(xhr.responseText);
+                            html_str = "";
+                            $.each(arr,function (i,obj) {
+                                html_str += "<tr>";
+                                    html_str += "<td>" + obj.id +"</td>";
+                                    html_str += "<td>" + obj.uname +"</td>";
+                                    html_str += "<td>" + obj.ugender +"</td>";
+                                    html_str += "<td>" + obj.uage +"</td>";
+                                    html_str += "<td>" + obj.uemail +"</td>";
+                                html_str += "</tr>";
+                            })
+                        }
+                        $('#show_body').html(html_str);
+                    };
+                    xhr.send(null)
+                })
+            })
+        </script>
+    </table>
+</body>
+</html>

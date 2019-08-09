@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>百度一下,你就知道</title>
+</head>
+<body>
+{% if params.name %}
+    <div>姓名：params.name</div>
+{% else %}
+    <a href="{{ url_for('login')}}">登录</a>
+{% endif %}
+<div>
+    <ul>
+        <li>{{ params.list1[0]}}</li>
+        <li>{{ params.list1[1]}}</li>
+        <li>{{ params.list1[2]}}</li>
+        <li>{{ params.list1[3]}}</li>
+    </ul>
+</div>
+
+<ol>
+    <li>名称:{{ params.dic.name }}</li>
+    <li>作者：{{ params.dic.author }}</li>
+    <li>价格：{{ params.dic.price }}</li>
+    <li>出版社:{{ params.dic.pulisher }}</li>
+</ol>
+<div>{{ params.person1.name }}</div>
+<div>{{ params.person1.say()}}</div>
+<div>
+    <ol>
+        {% for items in params.list1 %}
+            <li>{{ items }}</li>
+        {% endfor %}
+    </ol>
+</div>
+<div>
+    {% for item,value in params.dic.items() %}
+        <div>{{ item }}:{{ value }}</div>
+    {% endfor %}
+</div>
+
+</body>
+</html>

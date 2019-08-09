@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/jquery-3.4.1.js"></script>
+    <script>
+        $(function () {
+           $("#show_user").click(function () {
+                var xhr = createXhr();
+                xhr.open("get","/show_data",true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var arr = JSON.parse(xhr.responseText);
+                        var html = "";
+                        $.each(arr, function (i, obj) {
+                            html += "<tr>";
+                            html += "<td>" + obj.uid + "</td>";
+                            html += "<td>" + obj.uname + "</td>";
+                            html += "<td>" + obj.ugender + "</td>";
+                            html += "<td>" + obj.uage + "</td>";
+                            html += "<td>" + obj.uemail + "</td>";
+                            html += "</tr>";
+                        });
+                        $("#show-body").html(html);
+                    }
+
+                };
+                xhr.send(null);
+            });
+        });
+        </script>
+</head>
+<body>
+    <button id="show_user">显示</button>
+    <table border="1px">
+        <thead>
+        <tr>
+            <td>id</td>
+            <td>姓名</td>
+            <td>性别</td>
+            <td>年龄</td>
+            <td>邮箱</td>
+        </tr>
+        </thead>
+        <tbody id="show-body">
+
+        </tbody>
+    </table>
+</body>
+</html>

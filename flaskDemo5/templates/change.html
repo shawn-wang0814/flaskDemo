@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改信息</title>
+    <script type="text/javascript">
+
+    </script>
+</head>
+<body>
+    <form action="alter" method="post">
+        <table>
+            <tr>
+                姓名：<input type="text" name="uname" value="{{params.user.username}}">
+                <input type="hidden" name="uid" value="{{params.user.id}}">
+            </tr>
+            <tr>
+                年龄：<input type="number" name="uage" value="{{params.user.age}}">
+            </tr>
+            <tr>
+                邮箱：<input type="email" name = 'uemail' value="{{params.user.email}}">
+            </tr>
+            <tbody>
+            <input type="submit" name="提交">
+            </tbody>
+        </table>
+    </form>
+</body>
+</html>
