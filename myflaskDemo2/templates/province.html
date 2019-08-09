@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/jquery-3.4.1.js"></script>
+    <script src="/static/js/jquery-1.11.3.js"></script>
+    <script>
+        function load_pro() {
+            $(function () {
+                var xhr = createXhr();
+                xhr.open('get','/load_pro',false);
+                xhr.onreadystatechange = function () {
+                   if(xhr.readyState==4&&xhr.status==200){
+                       var arr = JSON.parse(xhr.responseText);
+                       var pro_html = "";
+                       $.each(arr,function (i,obj) {
+                           pro_html += "<option value='"+ obj.pid+ "'>";
+                           pro_html += obj.pname;
+                           pro_html += "</option>"
+                       })
+                   }
+                   $("#loadPro").html(pro_html)
+                };
+                xhr.send(null)
+            })
+        }
+
+        function load_city(pid){
+            var xhr = createXhr();
+            var url = '/load_city?id=' + pid;
+            xhr.open('get',url,true);
+            xhr.onreadystatechange=function () {
+                if(xhr.readyState==4&&xhr.status==200){
+                    var arr = JSON.parse(xhr.responseText);
+                    var city_html = "";
+                    $.each(arr,function (i,obj) {
+                        city_html += "<option value='" + obj.cid +"'>";
+                        city_html += obj.cname;
+                        city_html += "</option>";
+                    })
+                }
+                $('#loadCity').html(city_html)
+            };
+            xhr.send(null)
+        }
+
+        $(function () {
+            load_pro();
+            $('#loadPro').change(function () {
+                load_city(this.value);
+                console.log(this.value);
+            });
+
+            console.log($("#loadPro").val());
+            load_city($("#loadPro").val());
+        });
+
+    </script>
+</head>
+<body>
+   <select id="loadPro"></select>
+   <select id="loadCity"></select>
+</body>
+</html>
