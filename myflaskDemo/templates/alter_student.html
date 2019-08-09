@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改学生信息</title>
+</head>
+<body>
+    <form action="alter_student" method="post">
+        姓名：<input type="text" value="{{params.student.name}}" name="sname">
+            <input type="hidden" value="{{params.student.id}}" name="sid">
+        性别：<input type="text" value="{{params.student.gender}}" name="sgender">
+        年龄：<input type="number" value="{{params.student.age}}" name="sage">
+        <input type="submit">
+    </form>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>查询用户</title>
+    <title>查询学生信息</title>
 </head>
 <body>
     <a href="do_home">首页</a>
@@ -11,18 +11,16 @@
             <td>姓名</td>
             <td>性别</td>
             <td>年龄</td>
-            <td>邮箱</td>
             <td>操作</td>
         </tr>
-        {% for u in params.users %}
+        {% for s in params.students %}
             <tr>
-                <td>{{u.name}}</td>
-                <td>{{u.gender}}</td>
-                <td>{{u.age}}</td>
-                <td>{{u.email}}</td>
+                <td>{{s.name}}</td>
+                <td>{{s.gender}}</td>
+                <td>{{s.age}}</td>
                 <td>
-                    <a href="/alter_user?uanme={{u.name}}" >修改</a>
-                    <a href="/delete_user?uname={{u.name}}" >删除</a>
+                    <a href="/alter_student?sid={{s.id}}" >修改</a>
+                    <a href="/delete_student?sname={{s.name}}" >删除</a>
                 </td>
             </tr>
         {% endfor%}
